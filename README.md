@@ -45,8 +45,17 @@ See also: IKL
 The basic idea is to encode contextual information about a statement's interpretation using `os:context`, for example:
 
 ```
+<<:johnsHeart a :BeatingHeart>> os:context :t1 .
 <<:johnsHeart :part-of :john>> os:context :t1 .
 :t1 a bfo:TemporalRegion .
+```
+
+interpreted as:
+
+```
+type(johnsHeart, BeatingHeart, t1)
+part_of(johnsHeart, john, t1)
+type(t1, TemporalRegion)
 ```
 
 We can also easily encode complex FOL axioms using simple graph edges; e.g.
@@ -87,6 +96,11 @@ Note this can be combined with OWL interpretations, e.g:
 
 TODO: elucidate difference between probability of axiom being true via axiom holding for any instance of a cold with a probability of 0.95
 
+Most likely approach is a mapping to CL/IKL structures, e.g.
+
+```
+(probability (that (friend-of bob alice)) 0.9)
+```
 
 ### Other OWL axioms
 

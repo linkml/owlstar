@@ -24,13 +24,24 @@ os:interpretation rdfs:subPropertyOf os:statementModifier ;
 
 os:context rdfs:subPropertyOf os:statementModifier ;
   rdfs:label "has context" ;
-  dc:description "maps a statement to a context in which the statement is true. An example of a context is a temporal instant or duration";
+  dc:description "maps a statement to a context in which the statement is true. An example of a context is a temporal instant or duration.
+    TODO decide on mapping.
+    One option is to use IKL: <<S>> os:context c -> (context (that S) c)
+    Another is to add additional argument: <<s p o>> os:context c -> p(s,o,t)
+";
   rdfs:domain rdf:Statement ;
   rdfs:range os:StatementInterpretationModifier .
 
+os:probability rdfs:subPropertyOf os:statementModifier ;
+  rdfs:label "probability" ;
+  dc:description "maps a statement to a probability in which the statement is true." ;
+  rdfs:domain rdf:Statement ;
+  rdfs:range xsd:number ;
+  os:folMapping "<<?s ?p ?o>> os:probability ?pr -> (probability (that (?p ?s ?o)) ?pr".
+
 os:LogicalInterpretation a owl:Class ;
   rdfs:label "logical interpretation modifier" ;
-  dc:description "";
+  dc:description "grouping";
   rdfs:domain rdf:Statement .
 
 os:AllSomeInterpretation rdfs:subClassOf os:LogicalInterpretation ;
