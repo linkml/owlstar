@@ -30,7 +30,7 @@ The existing OWL layering on RDF is verbose and does not preserve
 desirable graph characteristics such as the finger and hand being
 connected by an edge
 
-Standard layering:
+Compare the very verbose standard layering (B) with a more intuitive and compact graph representation (C):
 
 ![img](https://douroucouli.files.wordpress.com/2019/07/z.png)
 
@@ -61,7 +61,7 @@ type(t1, TemporalRegion)
 We can also easily encode complex FOL axioms using simple graph edges; e.g.
 
 ```
-"<<nucleus part-of cell>> os:interpretation os:AllSomeAllTimesInterpretation .
+<<nucleus part-of cell>> os:interpretation os:AllSomeAllTimesInterpretation .
 ```
 
 This is interpreted as: for every nucleus n, if n exists at t, then there exists some cell c, and n is part of c at t
@@ -110,9 +110,16 @@ TODO: compact encoding of restrictions. E.g. `has-diagnosis some Cold SubClassOf
 
 We ignore RDF semantics and treat RDF* as a syntactic encoding of property graph structures.
 
-Semantics are specified in the [owlstar.ttl](owlstar.ttl) vocabulary, via the `owlstar:owlMapping` and owlstar:folMapping` predicates.
+Semantics are specified in the [owlstar.ttl](owlstar.ttl) vocabulary, via the `owlstar:owlMapping` and `owlstar:folMapping` predicates.
 
-The OWL mapping maps between RDF* structures and RDF triples that have a standard OWL interpretation
+The OWL mapping maps between RDF* structures and RDF triples that have an OWL interpretation through the standard OWL2-RDF mapping
+
+The FOL mapping maps between RDF* structures and Common Logic. TODO elucidate this more.
+
+The decision to abandon RDF semantics may be seen as drastic, but this is both justified and has limited consequences:
+
+ - it is necessary for a compact graph representation, as RDF interpretation of the above RDF* examples will have inconsistent interpretations
+ - For most practical purposes, RDF is used as a datamodel, not semantics. When semantics are required we transform to OWL
 
 ## TODO
 
