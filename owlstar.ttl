@@ -1,0 +1,56 @@
+prefix os: <http://w3id.org/owlstar/> .
+
+os: a owl:Ontology ;
+  rdfs:label "OWL*" ;
+  rc:license "CC-0" ;
+  rdfs:seeAlso <https://douroucouli.wordpress.com/2019/07/11/proposed-strategy-for-semantics-in-rdf-and-property-graphs/> ;
+  dc:description "
+    A vocabulary of terms that can be used provide semantic interpretations of property graphs (PGs). PGs are assumed to be encoded using RDF with reification used for edge properties.
+    We use RDF* as syntactic sugar for reification.
+    Note we do NOT assume RDF semantics. The PG/RDF* is used only for structure. Semantics are provided by the terms in this vocabulary.
+  " .
+
+
+os:statementModifier a rdfs:Property ;
+  rdfs:label "statement modifier" ;
+  dc:description "a property on a statement that induces a semantic interpretation of that statement";
+  rdfs:domain rdf:Statement .
+
+os:interpretation rdfs:subPropertyOf os:statementModifier ;
+  rdfs:label "logical interpretation modifier" ;
+  dc:description "";
+  rdfs:domain rdf:Statement ;
+  rdfs:range os:StatementInterpretationModifier .
+
+os:context rdfs:subPropertyOf os:statementModifier ;
+  rdfs:label "has context" ;
+  dc:description "maps a statement to a context in which the statement is true. An example of a context is a temporal instant or duration";
+  rdfs:domain rdf:Statement ;
+  rdfs:range os:StatementInterpretationModifier .
+
+os:LogicalInterpretation a owl:Class ;
+  rdfs:label "logical interpretation modifier" ;
+  dc:description "";
+  rdfs:domain rdf:Statement .
+
+os:AllSomeInterpretation rdfs:subClassOf os:LogicalInterpretation ;
+  rdfs:label "all-some interpretation modifier" ;
+  dc:description "A modifier on a triple that causes the triple to be interpreted as an all-some statement" ;
+  os:example "<<finger part-of hand>> os:interpretation os:AllSomeInterpretation -> finger rdfs:subClassOf [a owl:Restriction ; owl:onProperty part-of ; owl:someValuesFrom hand]" ;
+  os:owlMapping "<<?s ?p ?o>> os:interpretation os:AllSomeInterpretation -> ?s rdfs:subClassOf [a owl:Restriction ; owl:onProperty ?p ; owl:someValuesFrom ?o]" .
+
+os:SomeSomeInterpretation rdfs:subClassOf os:LogicalInterpretation ;
+  rdfs:label "some-some interpretation modifier" ;
+  dc:description "A modifier on a triple that causes the triple to be interpreted as a some-some statement" ;
+  os:example "<<HumanShhProtein involved-in HeartDevelopment>> os:interpretation os:SomeSomeInterpretation -> [a HumanShhProtein] involved-in [a HeartDevelopment]" ;
+  os:owlMapping "<<?s ?p ?o>> os:interpretation os:SomeSomeInterpretation -> [a ?s] ?p [a ?o]" .
+
+os:AllSomeAllTimesInterpretation rdfs:subClassOf os:LogicalInterpretation ;
+  rdfs:label "all-some all-times interpretation modifier" ;
+  dc:description "A modifier on a triple that causes the triple to be interpreted as an all-some statement holding for all times at which the subject exists" ;
+  os:example "<<nucleus part-of cell>> os:interpretation os:AllSomeAllTimesInterpretation ->
+      all i, t: <<i a nucleus>> os:context t -> exists j: <<j a cell>> os:context t, <<i part-of j>> os:context t" ;
+  os:folMapping "<<?s ?p ?o>> os:interpretation os:AllSomeAllTimesInterpretation -> all i,t : <<i a ?s>> os:context t -> exists j: <<j a ?o>> os:context t, <<i p j>> os:context t" .
+
+
+
