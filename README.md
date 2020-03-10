@@ -102,9 +102,11 @@ The OWL mapping maps between RDF* structures and RDF triples that have a standar
 
 ## TODO
 
+ - FOL
+ - register prefix
  - Derive docs from TTL
  - Provide more examples
- - Prove converters
+ - Provide converters
 
 ## See Also
 
