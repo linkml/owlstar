@@ -1,6 +1,13 @@
 # OWLStar: Ontological Interpretations for Web Property Graphs
 
-This repo holds the [owlstar.ttl](owlstar.ttl) vocabulary
+This repo holds the [owlstar.ttl](owlstar.ttl) vocabulary. This
+vocabulary allows edges in Property Graphs (e.g Neo4j, RDF*) to be
+annotated with properties that specify ontological semantics,
+including but not limited to OWL-DL interpretations.
+
+It is designed to easily slot in to how people are currently managing
+relationships between concepts in both knowledge graphs and
+triplestores such as Wikidata.
 
 For general background see: https://douroucouli.wordpress.com/2019/07/11/proposed-strategy-for-semantics-in-rdf-and-property-graphs/
 
@@ -29,7 +36,7 @@ This would be interpreted as the following OWL axiom (written here in Manchester
 
 ## Why not use RDF OWL layering?
 
-The existing OWL layering on RDF is verbose and does not preserve
+The existing [OWL layering on RDF](https://www.w3.org/TR/owl2-mapping-to-rdf/) is verbose and does not preserve
 desirable graph characteristics such as the `finger` and `hand` being
 connected by a single edge.
 
