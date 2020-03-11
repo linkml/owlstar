@@ -17,6 +17,21 @@ os: a owl:Ontology ;
     Note we do NOT assume RDF semantics. The PG/RDF* is used only for structure. Semantics are provided by the terms in this vocabulary.
   """ .
 
+os:example a owl:AnnotationProperty ;
+  rdfs:label "example" ;
+  dc:description "An example of an owlstar mapping" .
+
+os:owlMapping a owl:AnnotationProperty ;
+  rdfs:label "owl mapping" ;
+  dc:description """
+  An owlstar mapping from an RDF* structure to an OWL axiom encoded using the standard OWL to RDF mapping.
+  The syntax is SOURCE -> TARGET, where SOURCE is RDF* turtle syntax, and TARGET is RDF syntax.
+  The mapping can thus be easily converted to a SPARQL construct.
+  """ .
+
+os:folMapping a owl:AnnotationProperty ;
+  rdfs:label "for mapping" ;
+  dc:description "An owlstar mapping from an RDF* structure to an FOL axiom. TBD: Prover9 syntax vs CL" .
 
 os:statementModifier a rdf:Property ;
   rdfs:label "statement modifier" ;
