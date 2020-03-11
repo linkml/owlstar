@@ -1,17 +1,24 @@
-prefix os: <http://w3id.org/owlstar/> .
+@prefix os: <http://w3id.org/owlstar/> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 os: a owl:Ontology ;
   rdfs:label "OWL*" ;
-  rc:license "CC-0" ;
+  dc:license "CC-0" ;
   rdfs:seeAlso <https://douroucouli.wordpress.com/2019/07/11/proposed-strategy-for-semantics-in-rdf-and-property-graphs/> ;
-  dc:description "
+  dc:description """
     A vocabulary of terms that can be used provide semantic interpretations of property graphs (PGs). PGs are assumed to be encoded using RDF with reification used for edge properties.
     We use RDF* as syntactic sugar for reification.
     Note we do NOT assume RDF semantics. The PG/RDF* is used only for structure. Semantics are provided by the terms in this vocabulary.
-  " .
+  """ .
 
 
-os:statementModifier a rdfs:Property ;
+os:statementModifier a rdf:Property ;
   rdfs:label "statement modifier" ;
   dc:description "a property on a statement that induces a semantic interpretation of that statement";
   rdfs:domain rdf:Statement .
@@ -24,11 +31,12 @@ os:interpretation rdfs:subPropertyOf os:statementModifier ;
 
 os:context rdfs:subPropertyOf os:statementModifier ;
   rdfs:label "has context" ;
-  dc:description "maps a statement to a context in which the statement is true. An example of a context is a temporal instant or duration.
+  dc:description """
+    maps a statement to a context in which the statement is true. An example of a context is a temporal instant or duration.
     TODO decide on mapping.
     One option is to use IKL: <<S>> os:context c -> (context (that S) c)
     Another is to add additional argument: <<s p o>> os:context c -> p(s,o,t)
-";
+  """;
   rdfs:domain rdf:Statement ;
   rdfs:range os:StatementInterpretationModifier .
 
@@ -41,9 +49,8 @@ os:probability rdfs:subPropertyOf os:statementModifier ;
 
 os:LogicalInterpretation a owl:Class ;
   rdfs:label "logical interpretation modifier" ;
-  dc:description "grouping";
-  rdfs:domain rdf:Statement .
-
+  dc:description "grouping" .
+  
 os:AllSomeInterpretation rdfs:subClassOf os:LogicalInterpretation ;
   rdfs:label "all-some interpretation modifier" ;
   dc:description "A modifier on a triple that causes the triple to be interpreted as an all-some statement" ;
@@ -53,8 +60,10 @@ os:AllSomeInterpretation rdfs:subClassOf os:LogicalInterpretation ;
 os:AllNumberInterpretation rdfs:subClassOf os:LogicalInterpretation ;
   rdfs:label "all-number interpretation modifier" ;
   dc:description "A modifier on a triple that causes the triple to be interpreted as an OWL QCR" ;
-  os:example "<<hand has-part finger>> os:interpretation os:AllNumberInterpretation ; os:min 5 ; os:max 5 ->
-    hand rdfs:subClassOf [a owl:Restriction ; owl:onProperty part-of ; owl:cardinality 5]" ;
+  os:example """
+    <<hand has-part finger>> os:interpretation os:AllNumberInterpretation ; os:min 5 ; os:max 5 ->
+      hand rdfs:subClassOf [a owl:Restriction ; owl:onProperty part-of ; owl:cardinality 5]
+  """ ;
   os:owlMapping "<<?s ?p ?o>> os:interpretation os:AllNumberInterpretation -> todo " .
 
 os:SomeSomeInterpretation rdfs:subClassOf os:LogicalInterpretation ;
@@ -66,8 +75,10 @@ os:SomeSomeInterpretation rdfs:subClassOf os:LogicalInterpretation ;
 os:AllSomeAllTimesInterpretation rdfs:subClassOf os:LogicalInterpretation ;
   rdfs:label "all-some all-times interpretation modifier" ;
   dc:description "A modifier on a triple that causes the triple to be interpreted as an all-some statement holding for all times at which the subject exists" ;
-  os:example "<<nucleus part-of cell>> os:interpretation os:AllSomeAllTimesInterpretation ->
-      all i, t: <<i a nucleus>> os:context t -> exists j: <<j a cell>> os:context t, <<i part-of j>> os:context t" ;
+  os:example """
+    <<nucleus part-of cell>> os:interpretation os:AllSomeAllTimesInterpretation ->
+      all i, t: <<i a nucleus>> os:context t -> exists j: <<j a cell>> os:context t, <<i part-of j>> os:context t
+  """ ;
   os:folMapping "<<?s ?p ?o>> os:interpretation os:AllSomeAllTimesInterpretation -> all i,t : <<i a ?s>> os:context t -> exists j: <<j a ?o>> os:context t, <<i p j>> os:context t" .
 
 

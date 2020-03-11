@@ -2,33 +2,36 @@
 
 This repo holds the [owlstar.ttl](owlstar.ttl) vocabulary
 
-See: https://douroucouli.wordpress.com/2019/07/11/proposed-strategy-for-semantics-in-rdf-and-property-graphs/
+For general background see: https://douroucouli.wordpress.com/2019/07/11/proposed-strategy-for-semantics-in-rdf-and-property-graphs/
 
-## TL;DR
+## Quick introduction
 
-the idea is to write RDF* statements such as:
+the idea is to be able to use Property Graphs (PGs) to encode ontological knowledge in a more precise way.
+
+We use RDF* (RDFStar) as the property graph syntax. The idea is to
+write ontological assertions as single edges, such as:
 
 ```ttt
 <<:finger :part-of :hand>> owlstar:interpretation owlstar:AllSomeInterpretation .
 ```
 
-Which could be encoded and visualized in a standard PG database such as Neo4j as:
+Where `finger` and `hand` are classes, and the edge is to be interpreted as "every finger is part of some hand".
+
+This could be encoded and visualized in a standard PG database such as Neo4j as:
 
 ![img](https://douroucouli.files.wordpress.com/2019/07/mungalls-ontology-design-guidelines-8.png)
 
-And to have this interpreted as:
+This would be interpreted as the following OWL axiom (written here in Manchester syntax):
 
 ```owl
 :finger rdfs:subClassOf :part-of some :hand
 ```
 
-(manchester syntax)
-
-## Why?
+## Why not use RDF OWL layering?
 
 The existing OWL layering on RDF is verbose and does not preserve
-desirable graph characteristics such as the finger and hand being
-connected by an edge
+desirable graph characteristics such as the `finger` and `hand` being
+connected by a single edge.
 
 Compare the very verbose standard layering (B) with a more intuitive and compact graph representation (C):
 
@@ -38,7 +41,7 @@ Compare the very verbose standard layering (B) with a more intuitive and compact
 
 ### Temporal and Contextual Logic
 
-See `owlstar:context`
+See `owlstar:context` in the vocabulary
 
 See also: IKL
 
@@ -50,13 +53,24 @@ The basic idea is to encode contextual information about a statement's interpret
 :t1 a bfo:TemporalRegion .
 ```
 
-interpreted as:
+(here the intent is to represent a state of affairs at a particular
+time, and that state of affairs may change - e.g. johns heart may
+cease to beat, or it may be transplanted and part of a different
+person).
+
+There are different possibilities for interpreting this in First Order Logic, e.g.
 
 ```
 type(johnsHeart, BeatingHeart, t1)
 part_of(johnsHeart, john, t1)
 type(t1, TemporalRegion)
 ```
+
+Although there are other ways: IKL contexts, fluents, ...
+
+There are also different schemes/aaptterns for representing these
+using OWL binary predicates, but these tend to be more verbose than
+the PG representation, and some suffer from complex problems (e.g. [temporalized relations](https://github.com/cmungall/trel-crit) ).
 
 We can also easily encode complex FOL axioms using simple graph edges; e.g.
 
@@ -66,15 +80,21 @@ We can also easily encode complex FOL axioms using simple graph edges; e.g.
 
 This is interpreted as: for every nucleus n, if n exists at t, then there exists some cell c, and n is part of c at t
 
-See RO 2005 paper.
+See [RO 2005 paper](https://genomebiology.biomedcentral.com/articles/10.1186/gb-2005-6-5-r46).
+
+See also: [RO Wiki](https://github.com/oborel/obo-relations/wiki/ROAndTime)
+
+
 
 ### Probabilistic
 
-We can state:
+In a PG it is natural to annotate edges with confidence or prabiilities, e.g:
 
 ```
 <<:bob foaf:friendOf :alice>> os:probability 0.9 ^^ xsd:float .
 ```
+
+(Note that although we use RDF* for syntax, this doesn't work with RDF semantics, see below for discussion)
 
 visual depiction:
 
@@ -99,7 +119,7 @@ TODO: elucidate difference between probability of axiom being true via axiom hol
 Most likely approach is a mapping to CL/IKL structures, e.g.
 
 ```
-(probability (that (friend-of bob alice)) 0.9)
+(probability (that (friend-of bob alice)) 0.)9
 ```
 
 ### Other OWL axioms
@@ -123,11 +143,16 @@ The decision to abandon RDF semantics may be seen as drastic, but this is both j
 
 ## TODO
 
+ - Tidy this document then garner more feedback
  - FOL
  - register prefix
  - Derive docs from TTL
  - Provide more examples
  - Provide converters
+
+## FAQ
+
+
 
 ## See Also
 
