@@ -11,6 +11,10 @@ triplestores such as Wikidata.
 
 For general background see: [proposed strategy for semantics in rdf* and property graphs](https://douroucouli.wordpress.com/2019/07/11/proposed-strategy-for-semantics-in-rdf-and-property-graphs/)
 
+## Browse Ontology Online
+
+ * https://cmungall.github.io/owlstar/
+
 ## Quick introduction
 
 the idea is to be able to use Property Graphs (PGs) to encode ontological knowledge in a more precise way.
