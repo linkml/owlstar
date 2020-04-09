@@ -251,14 +251,11 @@ may differ in their data model. E.g. some may allow true hypergraphs.
 
 ## TODO
 
- - Tidy this document then garner more feedback
- - FOL
- - register prefix
- - Derive docs from TTL
- - Provide more examples
- - Provide converters
+See [milestones](https://github.com/cmungall/owlstar/milestones)
 
 ## FAQ
+
+TODO
 
 ## See Also
 
