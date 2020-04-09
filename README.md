@@ -54,13 +54,17 @@ The existing [OWL layering on RDF](https://www.w3.org/TR/owl2-mapping-to-rdf/) i
 desirable graph characteristics such as the `finger` and `hand` being
 connected by a single edge.
 
-Compare the very verbose standard layering (B) with a more intuitive and compact graph representation (C):
+Consider the ontology in (A) below. Compare the very verbose standard layering (B) with a more intuitive and compact graph representation (C):
 
 ![img](https://douroucouli.files.wordpress.com/2019/07/z.png)
 
-The RDF graph in C is very verbose and unintuitive from a user
+The RDF graph in B is obviously very verbose and unintuitive from a user
 perspective. Also it makes certain kinds of logic such as graph
 traversal over partonomies more difficult to implement.
+
+Note that many resources therefore choose to encode ontologies using a
+scheme like (C), but they typically do this in an unprincipled ad-hoc
+way. owlstar is an attempt to provide a formal way to do C.
 
 ## OWLStar as a proposed standard
 
