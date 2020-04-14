@@ -5,6 +5,8 @@ proposed vocabulary allows edges in [Property Graphs](https://neo4j.com/develope
 augmented with edge properties that specify ontological semantics,
 including (but not limited) to [OWL-DL](https://www.w3.org/TR/owl-primer/) interpretations.
 
+This can also be used as an alternative to the [current OWL layering on RDF](https://www.w3.org/TR/owl2-mapping-to-rdf/).
+
 It is designed to easily slot in to how people are currently managing
 relationships between concepts in both knowledge graphs and
 triplestores such as Wikidata.
@@ -13,7 +15,11 @@ For general background see: [proposed strategy for semantics in rdf* and propert
 
 ## Browse Ontology Online
 
- * https://cmungall.github.io/owlstar/
+ * [owlstar.ttl](owlstar.ttl) - raw turtle files
+ * https://cmungall.github.io/owlstar/ - owldoc rendition
+ * TODO: online browser
+
+(currently none of these are ideal, I'm looking for better solutions)
 
 ## Quick introduction
 
@@ -31,6 +37,8 @@ Where `finger` and `hand` are classes (e.g from an ontology such as [uberon](htt
 This could be encoded and visualized in a standard PG database such as Neo4j as:
 
 ![img](https://douroucouli.files.wordpress.com/2019/07/mungalls-ontology-design-guidelines-8.png)
+
+It could also be rendered in plain RDF (RDF* is syntatic sugar for reification)
 
 This would be interpreted as the following OWL axiom (written here in [Manchester syntax](https://www.w3.org/TR/owl2-manchester-syntax/)):
 

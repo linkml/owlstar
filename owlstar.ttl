@@ -74,7 +74,11 @@ os:AllSomeInterpretation rdfs:subClassOf os:LogicalInterpretation ;
 
 os:AllNumberInterpretation rdfs:subClassOf os:LogicalInterpretation ;
   rdfs:label "all-number interpretation modifier" ;
-  dc:description "A modifier on a triple that causes the triple to be interpreted as an OWL QCR" ;
+  dc:description """
+    A modifier on a triple that causes the triple to be interpreted as an OWL QCR.
+    Note: we may want to exclude the maxCardinality=0 scenario here as
+    this results in an unintuitive graph.
+  """ ;
   os:example """
     <<hand has-part finger>> os:interpretation os:AllNumberInterpretation ; os:min 5 ; os:max 5 ->
       hand rdfs:subClassOf [a owl:Restriction ; owl:onProperty part-of ; owl:cardinality 5]
