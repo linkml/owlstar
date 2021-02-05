@@ -1,5 +1,6 @@
 @prefix os: <http://w3id.org/owlstar/> .
-@prefix dc: <http://purl.org/dc/terms/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -8,9 +9,13 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 os: a owl:Ontology ;
-  rdfs:label "OWL*" ;
-  dc:license "CC-0" ;
+  rdfs:label "OWLStar"@en ;
+  owl:versionInfo "1.0" ;
+  dcterms:license "https://creativecommons.org/publicdomain/zero/1.0/" ;
+  dc:creator "Chriis Mungall"@en ;
+  dcterms:creator <https://orcid.org/0000-0002-6601-2165> ;
   rdfs:seeAlso <https://douroucouli.wordpress.com/2019/07/11/proposed-strategy-for-semantics-in-rdf-and-property-graphs/> ;
+  dcterms:created "2020-05-01"^^xsd:date ;
   dc:description """
     A vocabulary of terms that can be used provide semantic interpretations of property graphs (PGs). PGs are assumed to be encoded using RDF with reification used for edge properties.
     We use RDF* as syntactic sugar for reification.
@@ -18,35 +23,35 @@ os: a owl:Ontology ;
   """ .
 
 os:example a owl:AnnotationProperty ;
-  rdfs:label "example" ;
-  dc:description "An example of an owlstar mapping" .
+  rdfs:label "example"@en ;
+  rdfs:comment "An example of an owlstar mapping" .
 
 os:owlMapping a owl:AnnotationProperty ;
-  rdfs:label "owl mapping" ;
-  dc:description """
+  rdfs:label "owl mapping"@en ;
+  rdfs:comment """
   An owlstar mapping from an RDF* structure to an OWL axiom encoded using the standard OWL to RDF mapping.
   The syntax is SOURCE -> TARGET, where SOURCE is RDF* turtle syntax, and TARGET is RDF syntax.
   The mapping can thus be easily converted to a SPARQL construct.
   """ .
 
 os:folMapping a owl:AnnotationProperty ;
-  rdfs:label "for mapping" ;
-  dc:description "An owlstar mapping from an RDF* structure to an FOL axiom. TBD: Prover9 syntax vs CL" .
+  rdfs:label "for mapping"@en ;
+  rdfs:comment "An owlstar mapping from an RDF* structure to an FOL axiom. TBD: Prover9 syntax vs CL" .
 
 os:statementModifier a rdf:Property ;
-  rdfs:label "statement modifier" ;
-  dc:description "a property on a statement that induces a semantic interpretation of that statement";
+  rdfs:label "statement modifier"@en ;
+  rdfs:comment "a property on a statement that induces a semantic interpretation of that statement";
   rdfs:domain rdf:Statement .
 
 os:interpretation rdfs:subPropertyOf os:statementModifier ;
-  rdfs:label "logical interpretation modifier" ;
-  dc:description "";
+  rdfs:label "logical interpretation modifier"@en ;
+  rdfs:comment "";
   rdfs:domain rdf:Statement ;
   rdfs:range os:StatementInterpretationModifier .
 
 os:context rdfs:subPropertyOf os:statementModifier ;
-  rdfs:label "has context" ;
-  dc:description """
+  rdfs:label "has context"@en ;
+  rdfs:comment """
     maps a statement to a context in which the statement is true. An example of a context is a temporal instant or duration.
     TODO decide on mapping.
     One option is to use IKL: <<S>> os:context c -> (context (that S) c)
@@ -56,25 +61,31 @@ os:context rdfs:subPropertyOf os:statementModifier ;
   rdfs:range os:StatementInterpretationModifier .
 
 os:probability rdfs:subPropertyOf os:statementModifier ;
-  rdfs:label "probability" ;
-  dc:description "maps a statement to a probability in which the statement is true." ;
+  rdfs:label "probability"@en ;
+  rdfs:comment "maps a statement to a probability in which the statement is true." ;
   rdfs:domain rdf:Statement ;
   rdfs:range xsd:number ;
   os:folMapping "<<?s ?p ?o>> os:probability ?pr -> (probability (that (?p ?s ?o)) ?pr".
 
 os:LogicalInterpretation a owl:Class ;
-  rdfs:label "logical interpretation modifier" ;
-  dc:description "grouping" .
+  rdfs:label "logical interpretation modifier"@en ;
+  rdfs:comment "grouping" .
   
 os:AllSomeInterpretation rdfs:subClassOf os:LogicalInterpretation ;
-  rdfs:label "all-some interpretation modifier" ;
-  dc:description "A modifier on a triple that causes the triple to be interpreted as an all-some statement" ;
+  rdfs:label "all-some interpretation modifier"@en ;
+  rdfs:comment "A modifier on a triple that causes the triple to be interpreted as an all-some statement" ;
   os:example "<<finger part-of hand>> os:interpretation os:AllSomeInterpretation -> finger rdfs:subClassOf [a owl:Restriction ; owl:onProperty part-of ; owl:someValuesFrom hand]" ;
   os:owlMapping "<<?s ?p ?o>> os:interpretation os:AllSomeInterpretation -> ?s rdfs:subClassOf [a owl:Restriction ; owl:onProperty ?p ; owl:someValuesFrom ?o]" .
 
+os:AllOnlyInterpretation rdfs:subClassOf os:LogicalInterpretation ;
+  rdfs:label "all-only interpretation modifier"@en ;
+  rdfs:comment "A modifier on a triple that causes the triple to be interpreted as an all-only statement" ;
+  os:example "<<person friend-of person>> os:interpretation os:AllOnlyInterpretation -> finger rdfs:subClassOf [a owl:Restriction ; owl:onProperty part-of ; owl:allValuesFrom hand]" ;
+  os:owlMapping "<<?s ?p ?o>> os:interpretation os:AllOnlyInterpretation -> ?s rdfs:subClassOf [a owl:Restriction ; owl:onProperty ?p ; owl:allValuesFrom ?o]" .
+
 os:AllNumberInterpretation rdfs:subClassOf os:LogicalInterpretation ;
-  rdfs:label "all-number interpretation modifier" ;
-  dc:description """
+  rdfs:label "all-number interpretation modifier"@en ;
+  rdfs:comment """
     A modifier on a triple that causes the triple to be interpreted as an OWL QCR.
     Note: we may want to exclude the maxCardinality=0 scenario here as
     this results in an unintuitive graph.
@@ -86,14 +97,14 @@ os:AllNumberInterpretation rdfs:subClassOf os:LogicalInterpretation ;
   os:owlMapping "<<?s ?p ?o>> os:interpretation os:AllNumberInterpretation -> todo " .
 
 os:SomeSomeInterpretation rdfs:subClassOf os:LogicalInterpretation ;
-  rdfs:label "some-some interpretation modifier" ;
-  dc:description "A modifier on a triple that causes the triple to be interpreted as a some-some statement" ;
+  rdfs:label "some-some interpretation modifier"@en ;
+  rdfs:comment "A modifier on a triple that causes the triple to be interpreted as a some-some statement" ;
   os:example "<<HumanShhProtein involved-in HeartDevelopment>> os:interpretation os:SomeSomeInterpretation -> [a HumanShhProtein] involved-in [a HeartDevelopment]" ;
   os:owlMapping "<<?s ?p ?o>> os:interpretation os:SomeSomeInterpretation -> [a ?s] ?p [a ?o]" .
 
 os:AllSomeAllTimesInterpretation rdfs:subClassOf os:LogicalInterpretation ;
-  rdfs:label "all-some all-times interpretation modifier" ;
-  dc:description "A modifier on a triple that causes the triple to be interpreted as an all-some statement holding for all times at which the subject exists" ;
+  rdfs:label "all-some all-times interpretation modifier"@en ;
+  rdfs:comment "A modifier on a triple that causes the triple to be interpreted as an all-some statement holding for all times at which the subject exists" ;
   os:example """
     <<nucleus part-of cell>> os:interpretation os:AllSomeAllTimesInterpretation ->
       all i, t: <<i a nucleus>> os:context t -> exists j: <<j a cell>> os:context t, <<i part-of j>> os:context t

@@ -70,6 +70,7 @@
 
 # Challenges with OWL to RDF mapping
 
+
 ![](https://douroucouli.files.wordpress.com/2019/07/z.png)
 
 # Quick introduction
