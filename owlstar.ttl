@@ -77,6 +77,12 @@ os:AllSomeInterpretation rdfs:subClassOf os:LogicalInterpretation ;
   os:example "<<finger part-of hand>> os:interpretation os:AllSomeInterpretation -> finger rdfs:subClassOf [a owl:Restriction ; owl:onProperty part-of ; owl:someValuesFrom hand]" ;
   os:owlMapping "<<?s ?p ?o>> os:interpretation os:AllSomeInterpretation -> ?s rdfs:subClassOf [a owl:Restriction ; owl:onProperty ?p ; owl:someValuesFrom ?o]" .
 
+os:InverseAllSomeInterpretation rdfs:subClassOf os:LogicalInterpretation ;
+  rdfs:label "inverse all-some interpretation modifier"@en ;
+  rdfs:comment "A modifier on a triple that causes the triple to be interpreted as the inverse of an all-some statement" ;
+  os:example "<<hand has_part finger>> os:interpretation os:InverseAllSomeInterpretation -> finger rdfs:subClassOf [a owl:Restriction ; owl:onProperty [owl:inverseOf has-part] ; owl:someValuesFrom hand]";
+  os:owlMapping "<<?s ?p ?o>> os:interpretation os:InverseAllSomeInterpretation -> ?o rdfs:subClassOf [a owl:Restriction ; owl:onProperty [owl:inverseOf ?p] ; owl:someValuesFrom ?s]" .
+
 os:AllOnlyInterpretation rdfs:subClassOf os:LogicalInterpretation ;
   rdfs:label "all-only interpretation modifier"@en ;
   rdfs:comment "A modifier on a triple that causes the triple to be interpreted as an all-only statement" ;
